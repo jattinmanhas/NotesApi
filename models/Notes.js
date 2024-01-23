@@ -21,4 +21,17 @@ const NotesSchema = mongoose.Schema({
     }
 }, { timestamps: true })
 
+
+NotesSchema.pre('save', async function (next) {
+    try {
+      await this.createIndexes({ title: 'text', content: 'text' },
+         { weights: { content: 2, title: 5 } });
+      next();
+    } catch (err) {
+      console.error('Error creating indexes:', err);
+      next(err);
+    }
+  });
+  
+
 module.exports = mongoose.model('Notes', NotesSchema);

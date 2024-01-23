@@ -27,6 +27,7 @@ exports.postLogin = async (req, res) => {
         jwtUtils.attachCookiesToResponse({res, user : tokenUser})
 
         const token = req.signedCookies.token;
+        console.log(token);
 
         return res.status(200).json({ user: tokenUser, token: token });
     } catch (error) {
@@ -35,6 +36,7 @@ exports.postLogin = async (req, res) => {
 };
 
 exports.postRegister = async (req, res) => {
+    console.log(req.file);
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
